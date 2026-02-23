@@ -6,6 +6,26 @@ const Queue = require('../lib/Queue');
 
 function isPalindrome(queue) {
   // your code here
+  const arr = [];
+  const size = queue.size();
+
+  for (let i = 0; i < size; i++) {
+    const element = queue.dequeue();
+    arr.push(element);
+    queue.enqueue(element);
+  }
+
+  let first = 0;
+  let last = arr.length - 1;
+
+  while (first < last) {
+    if (arr[first] !== arr[last]) {
+      return false;
+    }
+    first++;
+    last--;
+  }
+  return true;
 }
 
 const queue = new Queue();

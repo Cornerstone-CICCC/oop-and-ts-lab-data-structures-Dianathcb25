@@ -8,19 +8,42 @@ const Queue = require('../lib/Queue');
 
 function storeCatalog(queue) {
   // your code here
+  const result = {
+    products: {},
+    totalPrice: 0,
+    mostExpensive: '',
+  };
+
+  let maxPrice = 0;
+
+  while (!queue.isEmpty()) {
+    const item = queue.dequeue();
+
+    if (result.products[item.product]) {
+      result.products[item.product] += 1;
+    } else {
+      result.products[item.product] = 1;
+    }
+    result.totalPrice += item.price;
+    if (item.price > maxPrice) {
+      maxPrice = item.price;
+      result.mostExpensive = item.product;
+    }
+  }
+  return result;
 }
 
 const store = new Queue();
-store.enqueue({ product: 'Milk', price: 10 })
-store.enqueue({ product: 'Soap', price: 5 })
-store.enqueue({ product: 'Cereal', price: 12 })
-store.enqueue({ product: 'Milk', price: 10 })
-store.enqueue({ product: 'Shampoo', price: 7 })
-store.enqueue({ product: 'Broom', price: 25 })
-store.enqueue({ product: 'Cereal', price: 9 })
+store.enqueue({ product: 'Milk', price: 10 });
+store.enqueue({ product: 'Soap', price: 5 });
+store.enqueue({ product: 'Cereal', price: 12 });
+store.enqueue({ product: 'Milk', price: 10 });
+store.enqueue({ product: 'Shampoo', price: 7 });
+store.enqueue({ product: 'Broom', price: 25 });
+store.enqueue({ product: 'Cereal', price: 9 });
 
-const result = storeCatalog(store)
-console.log(result)
+const result = storeCatalog(store);
+console.log(result);
 // {
 //   products: {
 //     "Milk": 2,
